@@ -57,12 +57,7 @@ function setSession()
 </head>
 <body data-padding-top="0">
 <center>
-전설의 한자와의 전쟁 <br><br>
-天 하늘 천<br>
-風 바람 풍<br>
-干 방패 간<br>
-囚 가둘 수<br>
-人 사람 인<br>
+<b>전설의 한자와의 전쟁</b> <br><br>  | 天 하늘 천 | 風 바람 풍 | 干 방패 간 | 囚 가둘 수 | 人 사람 인<br>
 <div><br><br></div>
 
 <div >
@@ -85,15 +80,13 @@ function setSession()
 <input type="text" id="user_name" name="user_name">
 입장하기
 <input type="button" value="계정저장" onClick="setSession();">
-</form>
 </div>
-
 
 <nav>
     <ul id="navigation">
       <li><a id="home">Home</a></li>
       <li><a id="service">Service</a></li>
-      <li><a id="about">About</a></li>
+
     </ul>
   </nav>
 <div id="app-root"></div>
@@ -102,13 +95,20 @@ function setSession()
 
 </center>
 
+<input type="text" id="search_q" name="search_q"> 검색어  <input type="button" value="찾기" onClick="getNaverSearch();">
 
-<p>time : <div id="result"></div></p> 
+
+<p>검색결과 : <div id="result"></div></p>
 
 <script>
 //$('#time').append('data');
-$.ajax({
-          url:'https://us-central1-loadman-c2e05.cloudfunctions.net/function-1?query=%EB%82%98%EB%AC%B4%20%EB%AA%A9',
+function getNaverSearch() {
+  $('#result').html("");
+  var q = document.getElementById("search_q").value;
+  var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/function-1?query=" + q;
+
+  $.ajax({
+      url: url_q,
 		  dataType : 'json',
           success:function(data){
                 $('#result').append("전체개수 : " + data.total + "<BR>");
@@ -120,11 +120,12 @@ $.ajax({
 				console.log(data);
             }
         })
+}
 //비동기 호출
 //https://us-central1-loadman-c2e05.cloudfunctions.net/function-1?query=%EB%82%98%EB%AC%B4%20%EB%AA%A9
 </script>
 
 
-
+</form>
 </body>
 </html>
