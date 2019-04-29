@@ -1,6 +1,6 @@
 # HanjaMan
 전설의 한자와의 전쟁
 
-페이지로 이동
 
-<http://whatthell.com>
+게임 페이지 메인으로 이동하기 
+<https://bearscho.github.io/hanjaman/index1.html>
