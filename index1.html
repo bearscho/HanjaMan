@@ -18,21 +18,13 @@ body { padding-top: 0px; padding-bottom: 0px; }
 </style>
 
 <script language="javascript">
-
-
-
-
   function render(div,data) {
     div.innerHTML = data;
   }
 
-
-
-
 //로그인 정보 저장
 function setSession()
 {
-
 
 	var char_img = $('input[name="char_img"]:checked').val();
 	var user_id = document.getElementById("user_id").value;
@@ -53,9 +45,6 @@ function setSession()
 	render(navigation,"<li><a id='home'>11111</a></li>     <li><a id='service'>2222</a></li>      <li><a id='about'>3333</a></li>");
 }
 
-
-
-
 </script>
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -63,7 +52,6 @@ function setSession()
 <!-- jQuery UI -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
 
 
 </head>
@@ -113,6 +101,28 @@ function setSession()
 
 
 </center>
+
+
+<p>time : <div id="result"></div></p>
+
+<script>
+//$('#time').append('data');
+$.ajax({
+          url:'https://us-central1-loadman-c2e05.cloudfunctions.net/function-1?query=%EB%82%98%EB%AC%B4%20%EB%AA%A9',
+		  dataType : 'json',
+          success:function(data){
+                $('#result').append("전체개수 : " + data.total + "<BR>");
+
+                for (var i=0;i<data.items.length;++i)
+                 {
+                   $('#result').append("<p>" + data.items[i].title + " : " + data.items[i].description + "<br><img src=" + data.items[i].thumbnail +"><br><br></p>");  
+                 }
+				console.log(data);
+            }
+        })
+//비동기 호출
+//https://us-central1-loadman-c2e05.cloudfunctions.net/function-1?query=%EB%82%98%EB%AC%B4%20%EB%AA%A9
+</script>
 
 
 
