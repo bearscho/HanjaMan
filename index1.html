@@ -22,7 +22,7 @@ body { padding-top: 0px; padding-bottom: 0px; }
 
 
 
-  function render(div,data) {   
+  function render(div,data) {
     div.innerHTML = data;
   }
 
@@ -32,8 +32,8 @@ body { padding-top: 0px; padding-bottom: 0px; }
 //로그인 정보 저장
 function setSession()
 {
-	
-  
+
+
 	var char_img = $('input[name="char_img"]:checked').val();
 	var user_id = document.getElementById("user_id").value;
 	var user_name = document.getElementById("user_name").value;
@@ -41,12 +41,12 @@ function setSession()
 	console.log("char 이미지 :" + char_img);
 	console.log("char 아이디 :" + user_id);
 	console.log("char 이름 : " + user_name);
-	
+
 	localStorage.setItem('char_img', char_img);
 	localStorage.setItem('user_id', user_id);
 	localStorage.setItem('user_name', user_name);
-	
-	
+
+
 	var root = document.getElementById('app-root');
     var navigation = document.getElementById('navigation');
 	render(root,"<p>내용 바꾸기</p>");
@@ -83,11 +83,11 @@ function setSession()
 <table>
 
 <tr align=center>
-	<td valign="bottom"><img src="/bearscho/hanjaman/blob/master/Image/char_1.JPG?raw=true" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_1.jpg" >킹도그</td>
-	<td valign="bottom"><img src="/bearscho/hanjaman/blob/master/Image/char_2.JPG?raw=true" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_2.jpg" >여의필</td>
-	<td valign="bottom"><img src="/bearscho/hanjaman/blob/master/Image/char_3.JPG?raw=true" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_3.jpg" checked>축구손오공</td>
-	<td valign="bottom"><img src="/bearscho/hanjaman/blob/master/Image/char_4.JPG?raw=true" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_4.jpg" >망치드래곤</td>
-	<td valign="bottom"><img src="/bearscho/hanjaman/blob/master/Image/char_5.JPG?raw=true" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_5.jpg" >연필</td>
+	<td valign="bottom"><img src="https://raw.githubusercontent.com/bearscho/hanjaman/master/Image/char_1.JPG" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_1.jpg" >킹도그</td>
+	<td valign="bottom"><img src="https://raw.githubusercontent.com/bearscho/hanjaman/master/Image/char_2.JPG" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_2.jpg" >여의필</td>
+	<td valign="bottom"><img src="https://raw.githubusercontent.com/bearscho/hanjaman/master/Image/char_3.JPG" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_3.jpg" checked>축구손오공</td>
+	<td valign="bottom"><img src="https://raw.githubusercontent.com/bearscho/hanjaman/master/Image/char_4.JPG" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_4.jpg" >망치드래곤</td>
+	<td valign="bottom"><img src="https://raw.githubusercontent.com/bearscho/hanjaman/master/Image/char_5.JPG" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_5.jpg" >연필</td>
 </tr>
 </table>
 
