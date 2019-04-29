@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ko" class=" fzoom">
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="robots" content="index,nofollow"/>
+<meta name="description" content="한자게임"/>
+<meta property="og:title" content="한자게임">
+
+<title>전설의 한자와의 전쟁</title>
+
+<style>
+body { padding-top: 0px; padding-bottom: 0px; }
+</style>
+
+<script language="javascript">
+
+
+
+
+  function render(div,data) {   
+    div.innerHTML = data;
+  }
+
+
+
+
+//로그인 정보 저장
+function setSession()
+{
+	
+  
+	var char_img = $('input[name="char_img"]:checked').val();
+	var user_id = document.getElementById("user_id").value;
+	var user_name = document.getElementById("user_name").value;
+
+	console.log("char 이미지 :" + char_img);
+	console.log("char 아이디 :" + user_id);
+	console.log("char 이름 : " + user_name);
+	
+	localStorage.setItem('char_img', char_img);
+	localStorage.setItem('user_id', user_id);
+	localStorage.setItem('user_name', user_name);
+	
+	
+	var root = document.getElementById('app-root');
+    var navigation = document.getElementById('navigation');
+	render(root,"<p>내용 바꾸기</p>");
+	render(navigation,"<li><a id='home'>11111</a></li>     <li><a id='service'>2222</a></li>      <li><a id='about'>3333</a></li>");
+}
+
+
+
+
+</script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+</head>
+<body data-padding-top="0">
+<center>
+전설의 한자와의 전쟁 <br><br>
+天 하늘 천<br>
+風 바람 풍<br>
+干 방패 간<br>
+囚 가둘 수<br>
+人 사람 인<br>
+<div><br><br></div>
+
+<div >
+<form>
+캐릭터를 선택하세요
+<table>
+
+<tr align=center>
+	<td valign="bottom"><img src="./image/char_1.jpg" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_1.jpg" >킹도그</td>
+	<td valign="bottom"><img src="./image/char_2.jpg" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_2.jpg" >여의필</td>
+	<td valign="bottom"><img src="./image/char_3.jpg" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_3.jpg" checked>축구손오공</td>
+	<td valign="bottom"><img src="./image/char_4.jpg" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_4.jpg" >망치드래곤</td>
+	<td valign="bottom"><img src="./image/char_5.jpg" width=50> <br><input type='radio' id='char_img'  name='char_img' value="char_5.jpg" >연필</td>
+</tr>
+</table>
+
+사용할 ID
+<input type="text" id="user_id" name="user_id">
+사용할 이름
+<input type="text" id="user_name" name="user_name">
+입장하기
+<input type="button" value="계정저장" onClick="setSession();">
+</form>
+</div>
+
+
+<nav>
+    <ul id="navigation">
+      <li><a id="home">Home</a></li>
+      <li><a id="service">Service</a></li>
+      <li><a id="about">About</a></li>
+    </ul>
+  </nav>
+<div id="app-root"></div>
+
+
+
+</center>
+
+
+
+</body>
+</html>
