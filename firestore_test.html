@@ -1,0 +1,50 @@
+<html>
+<header>
+
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+
+<script>
+//const firebase = require("firebase");
+// Required for side-effects
+//require("firebase/firestore");
+
+
+firebase.initializeApp({
+  apiKey: "AIzaSyB52lq26YCNgP6v1BQ8c1YlXnTzU260Fnc",  //'### FIREBASE API KEY ###',
+  authDomain: "localhost",   //'### FIREBASE AUTH DOMAIN ###',
+  projectId: "loadman-c2e05"  //'### CLOUD FIRESTORE PROJECT ID ###'
+});
+
+// Initialize Cloud Firestore through Firebase
+var db = firebase.firestore();    
+
+
+
+db.collection("users").get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        console.log(doc.id, " => ", doc.get("member"));
+    });
+});
+
+
+// Realtime change Event
+db.collection("users").doc("bea")
+    .onSnapshot(function(doc) {
+        console.log("Current data: ", doc.data());
+
+        alert(doc.get("member"));
+    });
+
+
+
+</script>
+
+</header>
+<body>
+	Firestore Test
+
+</body>
+</html>
