@@ -1,6 +1,16 @@
 <html>
 <header>
 
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	
+	
+	
+	
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
 
@@ -34,8 +44,8 @@ db.collection("users").get().then(function(querySnapshot) {
 db.collection("users").doc("bea")
     .onSnapshot(function(doc) {
         console.log("Current data: ", doc.data());
-
-        alert(doc.get("member"));
+	  $('#result').html("");
+        $('#result').append(doc.get("member"));
     });
 
 
