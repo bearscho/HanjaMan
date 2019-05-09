@@ -52,6 +52,13 @@ db.collection("users").doc("bea")
 
 </script>
 
+
+
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/common.css" />
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/style.css" />
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/entry_add.css" />
+
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/gnbcommon/style/gnbcommon/css/onenaver_gnb.css?2019051000" />
 </header>
 <body>
 	Firestore Test    Cloud Firestore 연동 부분
@@ -78,7 +85,9 @@ db.collection("users").doc("bea")
 	      url: url_q,
 	 		  //dataType : 'json',
 	       success:function(data){
-	          $('#dics').append("전체 : " + data + "<BR>");
+           var decodedUrl = decodeURIComponent(data);
+           console.log(decodedUrl);
+	          $('#dics').append("전체 : " + decodedUrl + "<BR>");
 	 					console.log(data);
 	       }
 	    });
