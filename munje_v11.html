@@ -67,6 +67,7 @@ db.collection("users").doc("bea")
 	   var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/get_naver_dics";
 		 
 	$.ajax({
+	  crossDomain: true,
 	  type : 'POST', // Http Request Method로 POST로 지정
 	  url : url_q, // 서버 요청 주소
 	  contentType : 'application/json;charset=UTF-8', // 서버 요청시 전송할 데이터가 UTF-8 형식의 JSON 객체임을 명시
