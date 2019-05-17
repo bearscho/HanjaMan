@@ -47,12 +47,11 @@ db.collection("hanja").doc("naver")
 <script>
 function get_naver_dics() {
 
-
   $('#dics').html("");
   //var q = document.getElementById("search_q").value;
   var hanja_id =  document.getElementById("hanja_id").value;;
   var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/get_naver_dics?hanja_id=" + hanja_id;
-console.log(url_q);
+  console.log(url_q);
   $.ajax({
    //crossDomain: true,
    type : 'GET', // Http Request Method로 POST로 지정
@@ -86,6 +85,21 @@ console.log(url_q);
    }, // 서버로부터 응답 데이터 도착시 로직 처리, 응답 데이터는 JavaScript 객체로 바로 사용 가능
      error : function() { console.log('err') } // 서버로부터 응답 데이터 실패시 로직 처리
   });
+
+
+  db.collection("hanja").doc("naver").set({
+      hanja_id: hanja_id
+  })
+  .then(function() {
+      console.log("Document successfully written!");
+  })
+  .catch(function(error) {
+      console.error("Error writing document: ", error);
+  });
+
+
+
+
 }
 </script>
 
