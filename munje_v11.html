@@ -63,19 +63,16 @@ db.collection("users").doc("bea")
 	 <script>
 	   $('#dics').html("");
 	   //var q = document.getElementById("search_q").value;
-	   var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/function-2";
-	   $.ajax({
-	      url: url_q,
-	 		  //dataType : 'json',
-	       success:function(data){
-           var decodedUrl = decodeURIComponent(data);
-           console.log(decodedUrl);
-	          $('#dics').append("전체 : " + decodedUrl + "<BR>");
-	 					console.log(data);
-	       }
-	    });
-	 //비동기 호출
-	 //https://us-central1-loadman-c2e05.cloudfunctions.net/function-1?query=%EB%82%98%EB%AC%B4%20%EB%AA%A9
+	   var postData = {"hanja_id":"8845"};
+	   var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/get_naver_dics";
+		 
+		 
+           $.post(url_q, postData, function (data, status) {
+                    var decodedUrl = decodeURIComponent(data);
+           		console.log(decodedUrl);
+		   $('#dics').append("전체 : " + decodedUrl + "<BR>");
+                });		 
+	   
 	 </script>
 
 
