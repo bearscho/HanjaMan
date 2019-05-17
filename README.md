@@ -1,11 +1,12 @@
 ### 전설의 한자와의 전쟁
 
-게임 페이지 메인으로 이동하기  
-
-<https://bearscho.github.io/hanjaman/index1.html>  
-<https://bearscho.github.io/hanjaman/firestore_test.html>
 
 <https://bearscho.github.io/hanjaman/munje_v11.html> 문제 풀기
+
+<https://bearscho.github.io/hanjaman/index1.html>  초기페이지 테스트  
+<https://bearscho.github.io/hanjaman/firestore_test.html>  기술 연동 테스트   Filestroe / Naver HTML 스크래핑   
+
+
 
 
 <https://bearscho.github.io/hanjaman/manage.html>  
