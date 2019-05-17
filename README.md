@@ -5,8 +5,10 @@
 <https://bearscho.github.io/hanjaman/index1.html>  
 <https://bearscho.github.io/hanjaman/firestore_test.html>
 
+<https://bearscho.github.io/hanjaman/munje_v11.html> 문제 풀기
 
-<https://bearscho.github.io/hanjaman/manage.md>  
+
+<https://bearscho.github.io/hanjaman/manage.html>  
 
 
 
