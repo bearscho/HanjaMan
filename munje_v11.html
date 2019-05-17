@@ -66,6 +66,10 @@ db.collection("users").doc("bea")
 	   var postData = {"hanja_id":"12100","a":"b"};
 	   var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/get_naver_dics";
 		 
+	//Origin: https://bearscho.github.io
+	//Access-Control-Request-Method: POST
+	//Access-Control-Request-Headers: X-PINGOTHER
+		 
 	$.ajax({
 	  crossDomain: true,
 	  type : 'POST', // Http Request Method로 POST로 지정
@@ -73,6 +77,10 @@ db.collection("users").doc("bea")
 	  contentType : 'application/json;charset=UTF-8', // 서버 요청시 전송할 데이터가 UTF-8 형식의 JSON 객체임을 명시
 	  data : JSON.stringify(postData), // JavaScript 객체를 JSON 객체로 변환하여 서버 요청시 전송
 	  dataType : 'json', // 서버로부터 응답받을 데이터가 JSON 객체임을 명시하여 수작업 없이 응답 데이터를 JavaScript 객체로 획득
+          headers: {		
+		'Origin':'https://bearscho.github.io',
+		'Access-Control-Request-Method':'POST'
+	  },
 	  success : function(response) { 
 	  	 var decodedUrl = decodeURIComponent(response);
            	 console.log(decodedUrl);
