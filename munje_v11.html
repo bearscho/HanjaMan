@@ -1,0 +1,87 @@
+<html>
+<header>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+
+
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+
+<script>
+//const firebase = require("firebase");
+// Required for side-effects
+//require("firebase/firestore");
+firebase.initializeApp({
+  apiKey: "AIzaSyB52lq26YCNgP6v1BQ8c1YlXnTzU260Fnc",  //'### FIREBASE API KEY ###',
+  authDomain: "localhost",   //'### FIREBASE AUTH DOMAIN ###',
+  projectId: "loadman-c2e05"  //'### CLOUD FIRESTORE PROJECT ID ###'
+});
+// Initialize Cloud Firestore through Firebase
+var db = firebase.firestore();
+db.collection("users").get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        console.log(doc.id, " => ", doc.get("member"));
+    });
+});
+// Realtime change Event
+db.collection("users").doc("bea")
+    .onSnapshot(function(doc) {
+        console.log("Current data: ", doc.data());
+	  $('#result').html("");
+        $('#result').append(doc.get("member"));
+    });
+</script>
+
+
+
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/common.css" />
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/style.css" />
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/entry_add.css" />
+
+<link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/gnbcommon/style/gnbcommon/css/onenaver_gnb.css?2019051000" />
+</header>
+<body>
+	Firestore Test    Cloud Firestore 연동 부분
+
+	<br>
+
+	<p>아래 설명에 해당하는 한자는?
+
+		 : <div id="result"></div></p>
+
+
+
+<p>Naver / Daum 에서 값 긁어온거   보여주기      Cloud Functions - Python-BeautifulSoup
+	 : <div id="dics"></div></p>
+
+
+	 <script>
+	   $('#dics').html("");
+	   //var q = document.getElementById("search_q").value;
+	   var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/function-2";
+	   $.ajax({
+	      url: url_q,
+	 		  //dataType : 'json',
+	       success:function(data){
+           var decodedUrl = decodeURIComponent(data);
+           console.log(decodedUrl);
+	          $('#dics').append("전체 : " + decodedUrl + "<BR>");
+	 					console.log(data);
+	       }
+	    });
+	 //비동기 호출
+	 //https://us-central1-loadman-c2e05.cloudfunctions.net/function-1?query=%EB%82%98%EB%AC%B4%20%EB%AA%A9
+	 </script>
+
+
+</body>
+</html>
