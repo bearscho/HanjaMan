@@ -60,8 +60,6 @@ function setMunjeCount(){
 function setNextMunje()
 {
 
-
-
   var MunjeListCount = localStorage.getItem("MunjeListCount");
 
   MunjeListRandom = Math.floor((Math.random() * MunjeListCount));
@@ -74,40 +72,34 @@ function setNextMunje()
   var first = db.collection("naver_munje_list")
         .orderBy("hanja_id");
 
-  return first.get().then(function (documentSnapshots) {
+  first.get().then(function (documentSnapshots) {
     // Get the last visible document
     var lastVisible = documentSnapshots.docs[MunjeListRandom];
     console.log("last", lastVisible.id, lastVisible.data());
+    localStorage.setItem("hanja_next_munje",lastVisible.id);
 
-
-  });
-
-
-
-
-
-
-
-  var query = munje_listsRef1.orderBy("hanja_id").startAt(A).limit(1)
-  .get()
-  .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            NextMunjeID = doc.id;
-              console.log(NextMunjeID ,  "---" ,doc.id, " => ", doc.data());
-              localStorage.setItem("hanja_next_munje",NextMunjeID);
-          });
-        })
-  .catch(function(error) {
-        console.log("Error getting documents: ", error);
   });
 
 
   var hanja_next_munje = "";
   hanja_next_munje = localStorage.getItem("hanja_next_munje");
   console.log("다음문제 ",hanja_next_munje)
-  var nowmunjeRef = db.collection("naver_hana_nowmunje");
-  nowmunjeRef.doc("OnXQxdA84H5CYXjH6GBy").set({
-  munje_id: hanja_next_munje });
+
+
+
+
+  var nowmunjeRef = db.collection("naver_hana_nowmunje").doc("OnXQxdA84H5CYXjH6GBy");
+  nowmunjeRef.update({
+      munje_id: hanja_next_munje
+  })
+  .then(function() {
+      console.log("munje_id Document successfully updated!");
+  })
+  .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+  });
+
 }
 
 function set_naver_munje_list(munje_id) {
@@ -198,9 +190,9 @@ function checkDap() {
   var input_dap =  document.getElementById("input_dap").value;
   console.log(hanja_text + " : " + input_dap );
 
+setNextMunje();
 
 
-  setNextMunje();
 
   if(hanja_text.indexOf(input_dap) >= 0) {
     now2 = new Date();
