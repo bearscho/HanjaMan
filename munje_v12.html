@@ -13,8 +13,9 @@
 
 <script>
 
-var now1;
-var now2;
+var now1;     //문제 출제시간
+var now2;     //정답 시간
+var munje_id = ""; //문제ID
 
 //const firebase = require("firebase");
 // Required for side-effects
@@ -26,26 +27,41 @@ firebase.initializeApp({
 });
 // Initialize Cloud Firestore through Firebase
 var db = firebase.firestore();
-db.collection("hanja").get().then(function(querySnapshot) {
-    querySnapshot.forEach(function(doc) {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        console.log(doc.id, " => ", doc.get("hanja_id"));
-
-        document.getElementById("hanja_id").value = doc.get("hanja_id");
-        get_naver_dics();
-    });
-});
 // Realtime change Event
-db.collection("hanja").doc("naver")
+db.collection("naver_hana_nowmunje").doc("OnXQxdA84H5CYXjH6GBy")
     .onSnapshot(function(doc) {
-        console.log("Current data: ", doc.data());
-	      $('#result').html("");
-        console.log(doc.get("hanja_id"));
+        //console.log("Current data: ", doc.data());
+        //console.log(doc.get("munje_id"));
+        munje_id = doc.get("munje_id");
+        console.log("현재 문제 ID => " + munje_id);
 
-        document.getElementById("hanja_id").value = doc.get("hanja_id");
-        get_naver_dics();
+        set_naver_munje_list(munje_id);
+
+        get_naver_dics();     //문제 Naver에서 가져오기
+
+
     });
+
+function set_naver_munje_list(munje_id) {
+  console.log(munje_id);
+  var docRef = db.collection("naver_munje_list").doc(munje_id);
+  docRef.get().then(function(doc) {
+          if (doc.exists) {
+              console.log("Document data:", doc.data());
+
+              localStorage.setItem("hanja_id",doc.get("hanja_id"));
+              localStorage.setItem("hanja_text",doc.get("hanja_text"));
+
+              console.log(localStorage.getItem("hanja_id"));
+          } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+          }
+  }).catch(function(error) {
+          console.log("Error getting document:", error);
+  });
+}
+
 </script>
 
 <script>
@@ -53,7 +69,11 @@ function get_naver_dics() {
 
   $('#dics').html("");
   //var q = document.getElementById("search_q").value;
-  var hanja_id =  document.getElementById("hanja_id").value;;
+  //var hanja_id =  document.getElementById("hanja_id").value;;
+
+  var hanja_id = localStorage.getItem("hanja_id");
+  var hanja_text = localStorage.getItem("hanja_text");
+
   var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/get_naver_dics?hanja_id=" + hanja_id;
   console.log(url_q);
   $.ajax({
@@ -70,28 +90,19 @@ function get_naver_dics() {
            $('#dics').html("전체 : " + decodedUrl + "<BR>");
      console.log("@@@@@@@@@@@@");
 
-     var dap = "";
-     var dap_text;
-     dap = document.querySelector("#dics > div.entrytop_box > dl > dd > strong");
+     //var dap = "";
+    // var dap_text;
+     //dap = document.querySelector("#dics > div.entrytop_box > dl > dd > strong");
 
      //*[@id="dics"]/div[1]/dl/dd
-     console.log(dap);
-     dap_text = dap.innerHTML;
+     //console.log(dap);
+     //dap_text = dap.innerHTML;
      //dap.innerHTML = "<b>나는 무슨 한자일까요???</b>";
-     console.log("^^^^^^^^^^^^");
-     console.log(dap_text);
-
-     localStorage.setItem('dap_text', dap_text);
+     //console.log("^^^^^^^^^^^^");
+     //console.log(dap_text);
 
      document.querySelector("  #dics > div.entrytop_box > dl > dd").innerHTML = ""
 
-     //$('#dics_dap').append(dap);
-     //dap.innerHTML = "<b>나는 무슨 한자일까요???</b>";
-    // $('#dics_dap').text(dap_text);
-
-    //console.log(data);
-    //console.log("-----------------------");
-    //console.log(decodedUrl);
 
    }, // 서버로부터 응답 데이터 도착시 로직 처리, 응답 데이터는 JavaScript 객체로 바로 사용 가능
      error : function() { console.log('err') } // 서버로부터 응답 데이터 실패시 로직 처리
@@ -108,20 +119,18 @@ function get_naver_dics() {
       console.error("Error writing document: ", error);
   });
 
-
   //문제 출제시간
   now1 = new Date();
-
 
 }
 
 function checkDap() {
 
-  var dap_text = localStorage.getItem('dap_text', dap_text);
+  var hanja_text = localStorage.getItem("hanja_text");
   var input_dap =  document.getElementById("input_dap").value;
-  console.log(dap_text + " : " +input_dap );
+  console.log(hanja_text + " : " + input_dap );
 
-  if(dap_text.indexOf(input_dap) >= 0) {
+  if(hanja_text.indexOf(input_dap) >= 0) {
     now2 = new Date();
     var gap = now2 - now1;
     var gap_sec = gap/1000;
@@ -151,10 +160,9 @@ function checkDap() {
 	<br>
 	<p>아래 설명에 해당하는 한자는?
 		 : <div id="result"></div></p>
-
 <p>
 
-  <input type="text" id="hanja_id" name="hanja_id"> 검색어  <input type="button" value="문제가져오기" onClick="get_naver_dics();">
+  <input type="button" value="문제가져오기" onClick="get_naver_dics();">
 
   내가 생각하는 답은? <input type="text" id="input_dap" name="input_dap">   <input type="button" value="답 확인" onClick="checkDap();">
 
