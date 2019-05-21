@@ -1,0 +1,47 @@
+<html>
+<header>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+
+<script>
+
+//const firebase = require("firebase");
+// Required for side-effects
+//require("firebase/firestore");
+firebase.initializeApp({
+  apiKey: "AIzaSyB52lq26YCNgP6v1BQ8c1YlXnTzU260Fnc",  //'### FIREBASE API KEY ###',
+  authDomain: "localhost",   //'### FIREBASE AUTH DOMAIN ###',
+  projectId: "loadman-c2e05"  //'### CLOUD FIRESTORE PROJECT ID ###'
+});
+// Initialize Cloud Firestore through Firebase
+var db = firebase.firestore();
+
+
+
+  var nowmunjeRef = db.collection("naver_munje_list").doc();
+
+  nowmunjeRef.set(  {  hanja_id: "8745" , hanja_text: "부술 쇄" })
+  .then(function() {
+      console.log("munje_id Document successfully updated!");
+  })
+  .catch(function(error) {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
+  });
+
+
+</script>
+</header>
+<body>
+
+
+</body>
+</html>

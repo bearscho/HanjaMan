@@ -33,11 +33,12 @@ db.collection("naver_hana_nowmunje").doc("OnXQxdA84H5CYXjH6GBy")
         //console.log("Current data: ", doc.data());
         //console.log(doc.get("munje_id"));
         munje_id = doc.get("munje_id");
-        console.log("현재 문제 ID => " + munje_id);
+        console.log("onSnapshot - 현재 문제 ID => " + munje_id);
 
-        set_naver_munje_list(munje_id);
+        set_naver_munje_list(munje_id)           //문제 Naver에서 가져오기
 
-        get_naver_dics();     //문제 Naver에서 가져오기
+
+
 
 });
 
@@ -75,17 +76,17 @@ function setNextMunje()
   first.get().then(function (documentSnapshots) {
     // Get the last visible document
     var lastVisible = documentSnapshots.docs[MunjeListRandom];
-    console.log("last", lastVisible.id, lastVisible.data());
+    console.log("다음 문제", lastVisible.id, lastVisible.data());
     localStorage.setItem("hanja_next_munje",lastVisible.id);
 
   });
 
+}
 
+function refreshNextMunje() {
   var hanja_next_munje = "";
   hanja_next_munje = localStorage.getItem("hanja_next_munje");
   console.log("다음문제 ",hanja_next_munje)
-
-
 
 
   var nowmunjeRef = db.collection("naver_hana_nowmunje").doc("OnXQxdA84H5CYXjH6GBy");
@@ -93,7 +94,7 @@ function setNextMunje()
       munje_id: hanja_next_munje
   })
   .then(function() {
-      console.log("munje_id Document successfully updated!");
+      console.log("다음문제 Document successfully updated!");
   })
   .catch(function(error) {
       // The document probably doesn't exist.
@@ -103,16 +104,18 @@ function setNextMunje()
 }
 
 function set_naver_munje_list(munje_id) {
-  console.log(munje_id);
+  console.log("set_naver_munje_list-",munje_id);
   var docRef = db.collection("naver_munje_list").doc(munje_id);
   docRef.get().then(function(doc) {
           if (doc.exists) {
-              console.log("Document data:", doc.data());
-
+              console.log("set_naver_munje_list Document data:", doc.data());
+              localStorage.setItem("munje_id",munje_id);
               localStorage.setItem("hanja_id",doc.get("hanja_id"));
               localStorage.setItem("hanja_text",doc.get("hanja_text"));
 
-              console.log(localStorage.getItem("hanja_id"));
+              console.log("set_naver_munje_list -" ,localStorage.getItem("hanja_id"));
+
+              get_naver_dics();
           } else {
               // doc.data() will be undefined in this case
               console.log("No such document!");
@@ -120,6 +123,8 @@ function set_naver_munje_list(munje_id) {
   }).catch(function(error) {
           console.log("Error getting document:", error);
   });
+
+
 }
 
 </script>
@@ -166,12 +171,12 @@ function get_naver_dics() {
 
    }, // 서버로부터 응답 데이터 도착시 로직 처리, 응답 데이터는 JavaScript 객체로 바로 사용 가능
      error : function() { console.log('err') } // 서버로부터 응답 데이터 실패시 로직 처리
-  });
-
-
-  db.collection("hanja").doc("naver").set({
-      hanja_id: hanja_id
   })
+
+
+  //db.collection("hanja").doc("naver").set({
+  //    hanja_id: hanja_id
+  //})
   .then(function() {
       console.log("Document successfully written!");
   })
@@ -202,7 +207,7 @@ setNextMunje();
     console.log(now2 + "-" + now1 + "=" + gap_sec);
 
     alert ("정답!!!    [" + gap_sec + "] 초 걸렸어요....");
-
+    refreshNextMunje();
 
   } else {
     alert("땡!!");
