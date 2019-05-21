@@ -34,8 +34,8 @@ db.collection("naver_hana_nowmunje").doc("OnXQxdA84H5CYXjH6GBy")
         //console.log(doc.get("munje_id"));
         munje_id = doc.get("munje_id");
         console.log("onSnapshot - 현재 문제 ID => " + munje_id);
-
-        set_naver_munje_list(munje_id)           //문제 Naver에서 가져오기
+        localStorage.setItem("munje_id",munje_id);
+        set_naver_munje_list(munje_id);           //문제 Naver에서 가져오기
 
 
 
@@ -109,7 +109,7 @@ function set_naver_munje_list(munje_id) {
   docRef.get().then(function(doc) {
           if (doc.exists) {
               console.log("set_naver_munje_list Document data:", doc.data());
-              localStorage.setItem("munje_id",munje_id);
+
               localStorage.setItem("hanja_id",doc.get("hanja_id"));
               localStorage.setItem("hanja_text",doc.get("hanja_text"));
 
