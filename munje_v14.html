@@ -1,5 +1,14 @@
 <html>
 <header>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="robots" content="index,nofollow"/>
+  <meta name="description" content="한자게임"/>
+  <meta property="og:title" content="한자게임">
+<style>
+  body { padding-top: 0px; padding-bottom: 0px; }
+  </style>
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -152,7 +161,7 @@ function get_naver_dics() {
    success:function(data){
           var decodedUrl = decodeURIComponent(data);
 
-           $('#dics').html("전체 : " + decodedUrl + "<BR>");
+           $('#dics').html("" + decodedUrl + "<BR>");
      console.log("@@@@@@@@@@@@");
 
      //var dap = "";
@@ -224,17 +233,19 @@ setNextMunje();
 <script>
   var user_name = localStorage.getItem("user_name");
   var char_img = localStorage.getItem("char_img");
-
-  $('#user_name').html("전체 : " + user_name + "<BR>");
 </script>
 
 <link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/common.css" />
 <link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/style.css" />
 <link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/entry_add.css" />
-
 <link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/gnbcommon/style/gnbcommon/css/onenaver_gnb.css?2019051000" />
+
+<script src="noti.js"></script>
 </header>
-<body>
+<body data-padding-top="0">
+<center>
+
+<button onclick="notifyMe()">Notify me!</button>
 
 <div id="user_name"></div>
 <script>
@@ -242,29 +253,18 @@ setNextMunje();
   $('#user_name').html("나의 이름은 <b> " + user_name + "</b> 입니다.<BR> <img src='https://raw.githubusercontent.com/bearscho/hanjaman/master/Image/" + char_img + "' width=50>");
 </script>
 
-
-<br><br><br>
-	Firestore Test   Cloud Firestore 연동 부분
-	<br>
-	<p>아래 설명에 해당하는 한자는?
-		 : <div id="result"></div></p>
-<p>
-
-  <input type="button" value="문제가져오기" onClick="get_naver_dics();">
-
-  내가 생각하는 답은? <input type="text" id="input_dap" name="input_dap">   <input type="button" value="답 확인" onClick="checkDap();">
-
-
-  <p>검색결과 : <div id="result"></div></p>
-
-
-
-	Naver 에서 값 긁어온거   보여주기      Cloud Functions - Python-BeautifulSoup
-	 : <div id="dics"></div></p>
-
-
-
-<div id="dics_dap"></div></p>
-
+<br><br>
+	아래 설명에 해당하는 한자를 입력하세요.. ("나무 목" 과 같이 띄워쓰기...) <br><br>
+   <input type="text" id="input_dap" name="input_dap">   <input type="button" value="정답 확인" onClick="checkDap();">
+   <input type="button" value="문제" onClick="get_naver_dics();">
+<center>
+  <table border=0>
+    <tr>
+	     <td align=center>
+         <div id="dics" ></div>
+       </td>
+    </tr>
+  </table>
+</center>
 </body>
 </html>
