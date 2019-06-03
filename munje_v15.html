@@ -66,11 +66,11 @@ function set_naver_munje(munje_id) {
 function get_naver_dics(hanja_id) {
   $('#dics').html("");
 
-  var url_q = "https://us-central1-loadman-c2e05.cloudfunctions.net/get_naver_dics?hanja_id=" + hanja_id;
+  var url_q = "http://49.247.207.252:8081/get_naver_dics/hanjaId/" + hanja_id;
   console.log(url_q);
   $.ajax({
-   //crossDomain: true,
-   type : 'GET', // Http Request Method로 POST로 지정
+   crossDomain: true,
+   type : 'OPTION', // Http Request Method로 POST로 지정   
    url : url_q, // 서버 요청 주소
    
    success:function(data){
