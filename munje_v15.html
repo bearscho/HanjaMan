@@ -70,7 +70,7 @@ function get_naver_dics(hanja_id) {
   console.log(url_q);
   $.ajax({
    crossDomain: true,
-   type : 'OPTION', // Http Request Method로 POST로 지정   
+   type : 'GET', // Http Request Method로 POST로 지정   
    url : url_q, // 서버 요청 주소
    
    success:function(data){
