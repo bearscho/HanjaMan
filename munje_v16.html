@@ -24,11 +24,13 @@ var now1;     //문제 출제시간
 var now2;     //정답 시간
 var munje_id = ""; //문제ID
 
+var hostip = "";
 
-
+hostip = "49.247.207.252";
+//hostip = "127.0.0.1"
 
   // 웹소켓 전역 객체 생성
-  var ws = new WebSocket("ws://127.0.0.1:3010");
+  var ws = new WebSocket("ws://" + hostip + ":3010");
   // 연결이 수립되면 서버에 메시지를 전송한다
   ws.onopen = function(event) {
     ws.send("Client message: Hi!");
@@ -92,7 +94,7 @@ function set_naver_munje(munje_id) {
 function get_naver_dics(hanja_id) {
   $('#dics').html("");
 
-  var url_q = "http://127.0.0.1:3000/get_naver_dics?hanja_id=" + hanja_id;
+  var url_q = "http://" + hostip + ":3000/get_naver_dics?hanja_id=" + hanja_id;
   console.log(url_q);
   $.ajax({
    crossDomain: true,
