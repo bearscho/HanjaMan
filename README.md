@@ -1,6 +1,6 @@
 ### 전설의 한자와의 전쟁
 
-<http://http://49.247.207.252:3000//index_intro.html>  메인   
+<http://49.247.207.252:3000//index_intro.html>  메인   
 
 
 
