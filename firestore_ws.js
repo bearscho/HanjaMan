@@ -10,6 +10,8 @@ if (platfotm == "win32") {
 	 hostip = "127.0.0.1";
 }
 
+var munje_id = ""
+
 console.log("%s-%s",platfotm,hostip);
 
 
@@ -83,11 +85,9 @@ wsServer.on('request', function(request) {
         if (message.type === 'utf8') {
             console.log('Received Message: ' + message.utf8Data);
                      // 브로드캐스팅!!
-            snedBroadMsg( message.utf8Data);
+            snedBroadMsg( munje_id);
         }
-        else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-        }
+
     });
     connection.on('close', function(reasonCode, description) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
