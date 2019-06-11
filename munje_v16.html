@@ -19,6 +19,11 @@
 <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
 
 <script>
+  var user_name = localStorage.getItem("user_name");
+  var char_img = localStorage.getItem("char_img");
+</script>
+
+<script>
 
 var now1;     //문제 출제시간
 var now2;     //정답 시간
@@ -27,24 +32,45 @@ var munje_id = ""; //문제ID
 var hostip = "";
 
 hostip = "49.247.207.252";
-//hostip = "127.0.0.1"
 
   // 웹소켓 전역 객체 생성
   var ws = new WebSocket("ws://" + hostip + ":3010");
   // 연결이 수립되면 서버에 메시지를 전송한다
   ws.onopen = function(event) {
-    ws.send("Client message: Hi!");
+    ws.send("C1:문제풀이 입장["+ user_name +"]");
   }
 
   // 서버로 부터 메시지를 수신한다
   ws.onmessage = function(event) {
-    console.log("Server message: ", event.data);
 
-    munje_id = event.data;
-    console.log("onSnapshot - 현재 문제 ID => " + munje_id);
-    localStorage.setItem("munje_id",munje_id);
-    set_naver_munje(munje_id);           //네이버에서 한자 가져와서 셋팅
-    setNextMunje();
+    var recvmsg = "";
+    recvmsg = event.data;
+
+
+    var code = "";
+    var msg = "";
+    code = recvmsg.substring(0,2);
+    msg = recvmsg.substring(3);
+
+    console.log("Server message: ",recvmsg,"code=",code,"|msg=",msg);
+
+    if(code == "S1") {
+      console.log("Server Hello Echo");
+    } else if(code =="S2") {  //현재 문제 ID 응답
+      munje_id = msg;
+      console.log("현재 풀어야 할 문제:",munje_id);
+      ws.send("C3:" + munje_id);
+    } else if (code =="S3") {
+      //console.log(msg)
+      var obj;
+      obj = JSON.parse(msg)
+      //console.log(obj.hanja_id)
+      localStorage.setItem("hanja_id",obj.hanja_id);
+      localStorage.setItem("hanja_text",obj.hanja_text);
+
+      get_naver_dics(localStorage.getItem("hanja_id"));
+    }
+
   }
 
   // error event handler
@@ -55,47 +81,11 @@ hostip = "49.247.207.252";
 
 
 
-
-
-
-
-
-
-firebase.initializeApp({
-  apiKey: "AIzaSyB52lq26YCNgP6v1BQ8c1YlXnTzU260Fnc",  //'### FIREBASE API KEY ###',
-  authDomain: "localhost",   //'### FIREBASE AUTH DOMAIN ###',
-  projectId: "loadman-c2e05"  //'### CLOUD FIRESTORE PROJECT ID ###'
-});
-// Initialize Cloud Firestore through Firebase
-var db = firebase.firestore();
-
-
-function set_naver_munje(munje_id) {
-  console.log("set_naver_munje-",munje_id);
-  var docRef = db.collection("naver_munje_list").doc(munje_id);
-  docRef.get().then(function(doc) {
-          if (doc.exists) {
-              console.log("set_naver_munje Document data:", doc.data());
-
-              localStorage.setItem("hanja_id",doc.get("hanja_id"));
-              localStorage.setItem("hanja_text",doc.get("hanja_text"));
-
-              console.log("set_naver_munje -" ,localStorage.getItem("hanja_id"));
-
-              get_naver_dics(localStorage.getItem("hanja_id"));
-          } else {
-              console.log("No such document!");
-          }
-  }).catch(function(error) {
-          console.log("Error getting document:", error);
-  });
-}
-
 function get_naver_dics(hanja_id) {
   $('#dics').html("");
 
   var url_q = "http://" + hostip + ":3000/get_naver_dics?hanja_id=" + hanja_id;
-  console.log(url_q);
+  //console.log(url_q);
   $.ajax({
    crossDomain: true,
    type : 'GET', // Http Request Method로 POST로 지정
@@ -104,7 +94,7 @@ function get_naver_dics(hanja_id) {
    success:function(data){
           var decodedUrl = decodeURIComponent(data);
            $('#dics').html("" + decodedUrl + "<BR>");
-          console.log("@@@@@@@@@@@@");
+          //console.log("@@@@@@@@@@@@");
 
           document.querySelector("  #dics > div.entrytop_box > dl > dd").innerHTML = ""
 
@@ -112,7 +102,7 @@ function get_naver_dics(hanja_id) {
      error : function() { console.log('err') } // 서버로부터 응답 데이터 실패시 로직 처리
   })
   .then(function() {
-      console.log("Document successfully written!");
+      //console.log("Document successfully written!");
   })
   .catch(function(error) {
       console.error("Error writing document: ", error);
@@ -122,61 +112,6 @@ function get_naver_dics(hanja_id) {
   now1 = new Date();
 }
 
-function setMunjeCount(){
-  //전체 한자목록의 갯수를 구함
-  var MunjeListCount = 0;
-  var munje_listsRef = db.collection("naver_munje_list");
-  munje_listsRef.get().then(snap => {
-     MunjeListCount = snap.size // will return the collection size
-     localStorage.setItem("MunjeListCount",MunjeListCount);
-     console.log("전체 문제수 : ", MunjeListCount);
-  });
-}
-
-//다음문제로 셋팅할 munje_id 를 미리 설정
-function setNextMunje()
-{
-
-  var MunjeListCount = localStorage.getItem("MunjeListCount");
-
-  MunjeListRandom = Math.floor((Math.random() * MunjeListCount));
-  localStorage.setItem("MunjeListRandom",MunjeListRandom);
-  console.log(MunjeListCount,"====",MunjeListRandom);
-  //갯수 사이의 랜덤숫자 위치에 해당하는 Doc ID를 구함
-  var NextMunjeID = "";
-  var munje_listsRef1 = db.collection("naver_munje_list");
-
-  var first = db.collection("naver_munje_list")
-        .orderBy("hanja_id");
-
-  first.get().then(function (documentSnapshots) {
-    // Get the last visible document
-    var lastVisible = documentSnapshots.docs[MunjeListRandom];
-    console.log("다음 문제", lastVisible.id, lastVisible.data());
-    localStorage.setItem("hanja_next_munje",lastVisible.id);
-
-  });
-}
-//정답을 맞추면, naver_hana_nowmunje 를 DB에서 업데이트한다.
-function update_db_nextMunje() {
-  var hanja_next_munje = "";
-  hanja_next_munje = localStorage.getItem("hanja_next_munje");
-  console.log("다음문제 ",hanja_next_munje)
-
-
-  var nowmunjeRef = db.collection("naver_hana_nowmunje").doc("OnXQxdA84H5CYXjH6GBy");
-  nowmunjeRef.update({
-      munje_id: hanja_next_munje
-  })
-  .then(function() {
-      console.log("다음문제 Document successfully updated!");
-  })
-  .catch(function(error) {
-      // The document probably doesn't exist.
-      console.error("Error updating document: ", error);
-  });
-
-}
 
 
 
@@ -186,7 +121,6 @@ function checkDap() {
   var input_dap =  document.getElementById("input_dap").value;
   console.log(hanja_text + " : " + input_dap );
 
-
   if(hanja_text.indexOf(input_dap) >= 0) {
     now2 = new Date();
     var gap = now2 - now1;
@@ -195,7 +129,7 @@ function checkDap() {
     console.log(now2 + "-" + now1 + "=" + gap_sec);
 
     alert ("정답!!!    [" + gap_sec + "] 초 걸렸어요....");
-    update_db_nextMunje();      //다음문제로...
+    ws.send("C4:" + munje_id);      //다음문제로...
 
   } else {
     alert("땡!!");
@@ -207,10 +141,7 @@ function checkDap() {
 </script>
 
 
-<script>
-  var user_name = localStorage.getItem("user_name");
-  var char_img = localStorage.getItem("char_img");
-</script>
+
 
 <link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/common.css" />
 <link type="text/css" rel="stylesheet" href="https://ssl.pstatic.net/dicimg/hanja/style/201904261517/css/style.css" />
@@ -244,8 +175,5 @@ function checkDap() {
 </center>
 
 
-<script>
-  setMunjeCount();    //현재 전체 문제 갯수 설정
-</script>
 </body>
 </html>
