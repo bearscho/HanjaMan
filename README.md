@@ -1,12 +1,14 @@
 ### 전설의 한자와의 전쟁
 
+<http://49.247.207.252:3000/index_intro.html>  메인   
 
-<https://bearscho.github.io/hanjaman/index_intro.html>  메인    
-<https://bearscho.github.io/hanjaman/munje_v15.html> 문제 풀기  
 
 
 
 ---- 테스트 ----
+
+<https://bearscho.github.io/hanjaman/index_intro.html>  메인    
+<https://bearscho.github.io/hanjaman/munje_v15.html> 문제 풀기  
 <https://bearscho.github.io/hanjaman/munje_v14.html> 문제 풀기  
 <https://bearscho.github.io/hanjaman/munje_v13.html> 문제 풀기  
 <https://bearscho.github.io/hanjaman/munje_v11.html> 문제 풀기
