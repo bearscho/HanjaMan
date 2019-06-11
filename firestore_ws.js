@@ -92,15 +92,17 @@ wsServer.on('request', function(request) {
 						console.log(res);
 						get_nextMunje(res,function(res1) {
 								console.log(res1);
-
 								update_db_nextMunje(res1);
 						});
 					}	);
+				} else if (code =="C9") {		//문제 추가하기...
+					var obj;
+		      obj = JSON.parse(msg)
 
+					insert_munje(obj.hanja_id,obj.hanja_text,function(res) {
+							console.log(res);
+					});
 				}
-
-
-
     });
     connection.on('close', function(reasonCode, description) {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
@@ -175,5 +177,19 @@ update_db_nextMunje = function (hanja_next_munje,callback) {
       // The document probably doesn't exist.
       console.error("Error updating document: ", error);
   });
+}
+
+
+insert_munje = function (h_id,h_text,callback) {
+	var nowmunjeRef = db.collection("naver_munje_list").doc(h_id);
+
+	nowmunjeRef.set(  {  hanja_id: h_id , hanja_text: h_text })
+	.then(function() {
+			console.log("munje_id Document successfully updated!");
+	})
+	.catch(function(error) {
+			// The document probably doesn't exist.
+			console.error("Error updating document: ", error);
+	});
 
 }

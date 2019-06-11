@@ -56,6 +56,11 @@ hostip = "49.247.207.252";
 
     if(code == "S1") {
       console.log("Server Hello Echo");
+
+      //문제 추가할때만 사용
+      //var data = {    hanja_id: "12106"  , hanja_text: "흐릴 탁"   }
+      //ws.send("C9:"+JSON.stringify(data))
+
     } else if(code =="S2") {  //현재 문제 ID 응답
       munje_id = msg;
       console.log("현재 풀어야 할 문제:",munje_id);
@@ -163,7 +168,7 @@ function checkDap() {
 <br><br>
 	아래 설명에 해당하는 한자를 입력하세요.. ("나무 목" 과 같이 띄워쓰기...) <br><br>
    <input type="text" id="input_dap" name="input_dap">   <input type="button" value="정답 확인" onClick="checkDap();">
-   <input type="button" value="문제" onClick="get_naver_dics();">
+
 <center>
   <table border=0>
     <tr>
