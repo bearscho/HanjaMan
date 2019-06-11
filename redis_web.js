@@ -27,8 +27,9 @@ app.post('/set_redis_hanja',function(req,res){
 	console.log("aaaaaaaaaaaaaa ");
   var hanja_id=req.body.hanja_id;
   var hanja_html=req.body.hanja_html;
-  console.log("hanja_id = "+hanja_id+", hanja_html is "+hanja_html);
-	client.set(hanja_id,hanja_html,redis.print);
+  //console.log("hanja_id = "+hanja_id+", hanja_html is "+hanja_html);
+	//client.set(hanja_id,hanja_html,redis.print);
+	client.set(hanja_id,hanja_html);
   res.end(hanja_id);
 });
 
