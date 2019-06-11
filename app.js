@@ -102,12 +102,6 @@ app.get('/',function(req,res) {
 app.get('/index_intro.html',function(req,res) {
   res.sendFile(path.join(__dirname+ pathformat + 'index_intro.html'));
 });
-app.get('/munje_v15.html',function(req,res) {
-  res.sendFile(path.join(__dirname+ pathformat + 'munje_v15.html'));
-});
-app.get('/munje_v14.html',function(req,res) {
-  res.sendFile(path.join(__dirname+ pathformat + 'munje_v14.html'));
-});
 app.get('/munje_v16.html',function(req,res) {
   res.sendFile(path.join(__dirname+ pathformat + 'munje_v16.html'));
 });
